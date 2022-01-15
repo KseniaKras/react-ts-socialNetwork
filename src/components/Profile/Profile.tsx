@@ -2,25 +2,15 @@ import React from 'react';
 import './Profile.module.css'
 import c from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 
-export const ProfileData = {
-    image: 'http://ic.pics.livejournal.com/jazztour/50295466/797314/797314_original.jpg',
-}
+function Profile(props: any) {
 
-type ProfileDataType = {
-    image: string,
-}
 
-function Profile(props: ProfileDataType) {
     return (
         <div>
-            <div className={c.image}>
-                <img className={c.imageItem} src={props.image} alt=""/>
-            </div>
-            <div>
-                ava+description
-            </div>
+            <ProfileInfo image='http://ic.pics.livejournal.com/jazztour/50295466/797314/797314_original.jpg'/>
             <MyPosts />
         </div>
     );
