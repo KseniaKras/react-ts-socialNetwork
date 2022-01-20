@@ -1,7 +1,11 @@
 import React from 'react';
 import c from './Message.module.css'
 
-function Message(props:any) {
+type MessagePropsType = {
+    message: string
+}
+
+function Message(props: MessagePropsType) {
     return (
         <div className={c.message}>
             {props.message}

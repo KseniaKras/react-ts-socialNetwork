@@ -4,13 +4,19 @@ import c from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
+export const ProfileData = {
+    image: 'http://ic.pics.livejournal.com/jazztour/50295466/797314/797314_original.jpg'
+}
 
-function Profile(props: any) {
+type ProfilePropsType = {
 
+}
+
+function Profile(props: ProfilePropsType) {
 
     return (
         <div>
-            <ProfileInfo image='http://ic.pics.livejournal.com/jazztour/50295466/797314/797314_original.jpg'/>
+            <ProfileInfo image={ProfileData.image} />
             <MyPosts />
         </div>
     );

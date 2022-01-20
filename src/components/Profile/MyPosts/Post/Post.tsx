@@ -1,25 +1,25 @@
 import React from 'react';
 import './Post.module.css'
 import c from './Post.module.css'
+import {v1} from "uuid";
 
-export const PostData = {
-    avatar: 'https://kartinkin.net/uploads/posts/2021-07/1626319767_12-kartinkin-com-p-anime-ava-geimer-anime-krasivo-12.png'
-
-}
-
-type PostDataType = {
+type PostPropsType = {
     avatar: string
-    message: string
-    likesCount: number
+    message: any
+    likesCount: any
 }
 
-function Post(props: PostDataType) {
+function Post(props: PostPropsType) {
     return (
         <div className={c.post}>
-            <img className={c.avatar} src={props.avatar} alt=""/>
+            <img className={c.avatar}
+                 src={props.avatar}
+                 alt=""
+            />
             {props.message}
             <div>
-                <span>like</span> {props.likesCount}
+                <span>like</span>
+                {props.likesCount}
             </div>
         </div>
     );
