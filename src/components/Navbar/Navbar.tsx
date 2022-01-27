@@ -2,26 +2,17 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import './Navbar.module.css'
 import c from './Navbar.module.css';
-import {v1} from "uuid";
+import {NavLinkDataType} from "../../redux/state";
 
-type NavLindData = {
-    id: number
-    path: string
-    title: string
+type NavbarPropsType = {
+    myState: Array<NavLinkDataType>
 }
 
-function Navbar() {
-    const NavLinkData = [
-        {id: v1(), path: '/profile', title: 'Profile'},
-        {id: v1(), path: '/dialogs', title: 'Messages'},
-        {id: v1(), path: '/news', title: 'News'},
-        {id: v1(), path: '/music', title: 'Music'},
-        {id: v1(), path: '/settings', title: 'Settings'},
-    ]
+function Navbar(props: NavbarPropsType) {
 
     return (
         <nav className={c.nav}>
-            {NavLinkData.map(n => {
+            {props.myState.map(n => {
                 return (
                     <div key={n.id} className={c.item}>
                         <NavLink to={n.path}
