@@ -4,7 +4,6 @@ import c from './Post.module.css'
 import {v1} from "uuid";
 
 type PostPropsType = {
-    avatar: string
     message: any
     likesCount: any
 }
@@ -13,7 +12,7 @@ function Post(props: PostPropsType) {
     return (
         <div className={c.post}>
             <img className={c.avatar}
-                 src={props.avatar}
+                 src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpyQ3Ez7fGNDmuULcJxaGc3CxZ5ohwAoFeGQ&usqp=CAU'
                  alt=""
             />
             {props.message}

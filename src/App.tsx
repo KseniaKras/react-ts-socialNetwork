@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
@@ -9,9 +8,15 @@ import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import News from "./components/News/News";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import state from './redux/state';
+import {ActionsTypes, RootStateType} from "./redux/state";
 
-function App() {
+
+type AppPropsType = {
+    state: RootStateType
+    dispatch: (action: ActionsTypes)=>void
+}
+
+function App({state,dispatch,...props}:AppPropsType) {
 
     return (
         <div className='app-wrapper'>
@@ -21,7 +26,9 @@ function App() {
                 <div className='app-wrapper-content'>
                     <Routes>
                         {/*<Route path="/" element={<App />}/>*/}
-                        <Route path={'/profile/*'} element={<Profile myState={state.profilePage}/>}/> {/*image={ProfileData.image}/>*/}
+                        <Route path={'/profile/*'} element={<Profile profilePage={state.profilePage}
+                                                                     dispatch={dispatch}
+                        />}/>
                         <Route path={'/dialogs/*'} element={<Dialogs myState={state.dialogsPage}/>}/>
                         <Route path={'/music'} element={<Music/>} />
                         <Route path={'/news'} element={<News/>} />

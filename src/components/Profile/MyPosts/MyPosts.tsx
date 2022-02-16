@@ -1,31 +1,44 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import './MyPosts.module.css'
 import Post from "./Post/Post";
 import c from './MyPosts.module.css';
-import {PostType} from "../../../redux/state";
+import {ActionsTypes, addPostAC, changeNewTextAC, PostType} from "../../../redux/state";
 
 
 type MyPostsPropsType = {
     posts: Array<PostType>
+    newPostMessage: string
+    dispatch: (action: ActionsTypes)=>void
 }
 
-function MyPosts(props: MyPostsPropsType) {
+function MyPosts({posts,newPostMessage,dispatch,...props}: MyPostsPropsType) {
+   // const newPostElement = React.createRef<HTMLTextAreaElement>()
+
+    const onClickAddPostHandler = () => {
+        dispatch( addPostAC(newPostMessage) )
+    }
+
+    const newTextChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        let newText = e.currentTarget.value
+        dispatch(changeNewTextAC(newText))
+    }
 
     return (
         <div>
             <h3>My Posts</h3>
             <div>
                 <div>
-                    <textarea></textarea>
+                    {/*<textarea ref={newPostElement}/>*/}
+                    <textarea value={newPostMessage} onChange={ newTextChangeHandler }/>
                 </div>
                 <div>
-                    <button>Add Post</button>
+                    <button onClick={onClickAddPostHandler}>Add Post</button>
                 </div>
             </div>
             <div className={c.post}>
-                {props.posts.map(p => {
+                {posts.map(p => {
                     return (
-                        <Post avatar={p.avatar} message={p.message} likesCount={p.likesCount}/>
+                        <Post message={p.message} likesCount={p.likesCount}/>
                     )
                 })}
 

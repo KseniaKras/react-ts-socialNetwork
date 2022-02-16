@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import './Dialogs.module.css'
 import c from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
@@ -9,7 +9,12 @@ type DialogsPropsType = {
     myState: DialogsPageType
 }
 
-function Dialogs(props:DialogsPropsType) {
+function Dialogs(props: DialogsPropsType) {
+
+    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        let newMessage = e.currentTarget.value
+
+    }
 
     return (
         <div className={c.dialogs}>
@@ -27,8 +32,9 @@ function Dialogs(props:DialogsPropsType) {
                         <Message message={m.message}/>
                     )
                 })}
-
+                {/*<textarea value={props.newMessage} onChange={onChangeHandler}></textarea>*/}
             </div>
+
         </div>
     );
 }

@@ -3,19 +3,23 @@ import './Profile.module.css'
 import c from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ProfilePageType} from "../../redux/state";
+import {ActionsTypes, ProfilePageType} from "../../redux/state";
 
 
 type ProfilePropsType = {
-    myState: ProfilePageType
+    profilePage: ProfilePageType
+    dispatch: (action: ActionsTypes)=>void
 }
 
-function Profile(props: ProfilePropsType) {
+function Profile({profilePage,dispatch,...props}: ProfilePropsType) {
 
     return (
         <div>
-            <ProfileInfo profileInfoState={props.myState.profileData} />
-            <MyPosts posts={props.myState.posts}/>
+            <ProfileInfo profileInfoState={profilePage.profileData} />
+            <MyPosts posts={profilePage.posts}
+                     dispatch={dispatch}
+                     newPostMessage={profilePage.newPostText}
+            />
         </div>
     );
 }
