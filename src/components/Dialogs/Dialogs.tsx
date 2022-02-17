@@ -1,19 +1,32 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, KeyboardEvent} from 'react';
 import './Dialogs.module.css'
 import c from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {DialogsPageType} from "../../redux/state";
+import {ActionsTypes, addMessageAC, DialogsPageType, updateNewMessageTextAC} from "../../redux/state";
 
 type DialogsPropsType = {
     myState: DialogsPageType
+    dispatch: (action: ActionsTypes)=>void
 }
 
 function Dialogs(props: DialogsPropsType) {
 
+    let message = props.myState.newMessageText
+
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newMessage = e.currentTarget.value
+        props.dispatch( updateNewMessageTextAC(newMessage) )
+    }
 
+    const addMessageHandler = () => {
+        props.dispatch( addMessageAC(message) )
+    }
+
+    const onKeyPressAddMessage = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+        if(e.key === 'Enter') {
+            addMessageHandler()
+        }
     }
 
     return (
@@ -32,7 +45,8 @@ function Dialogs(props: DialogsPropsType) {
                         <Message message={m.message}/>
                     )
                 })}
-                {/*<textarea value={props.newMessage} onChange={onChangeHandler}></textarea>*/}
+                <textarea value={message} onChange={onChangeHandler} onKeyPress={onKeyPressAddMessage}/>
+                <button onClick={addMessageHandler}>add</button>
             </div>
 
         </div>

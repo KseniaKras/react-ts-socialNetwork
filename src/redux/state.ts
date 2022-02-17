@@ -1,5 +1,10 @@
 import {v1} from "uuid";
 
+const ADD_POST = 'ADD-POST'
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+const ADD_MESSAGE = 'ADD-MESSAGE'
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT'
+
 export type MessageType = {
     id: string
     message: string
@@ -19,6 +24,7 @@ export type ProfileDataType = {
 }
 export type DialogsPageType = {
     dialogs: Array<DialogsType>
+    newMessageText: string
     messages: Array<MessageType>
 }
 export type ProfilePageType = {
@@ -46,38 +52,19 @@ export type RootStateType = {
 export type StoreType = {
     _state: RootStateType
     getState: () => RootStateType
-    _callSubscriber: () => void
-    subscribe: (observer: () => void) => void
+    _callSubscriber: (state:RootStateType) => void
+    subscribe: (observer: (state:RootStateType) => void) => void
     dispatch: (action: ActionsTypes)=>void
-    // addPost: (postMessage: string) => void
-    // updateNewPostText: (newText: string) => void
 }
-// type AddPostActionType = {
-//     type: 'ADD-POST'
-//     postText: string
-// }
-type AddPostActionType = ReturnType<typeof addPostAC>
 
-// type UpdateNewPostTextActionType = {
-//     type: 'UPDATE-NEW-POST-TEXT'
-//     newText: string
-// }
-type UpdateNewPostTextActionType = ReturnType<typeof changeNewTextAC>
+export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof updateNewPostTextAC> |
+    ReturnType<typeof addMessageAC> | ReturnType<typeof updateNewMessageTextAC>
 
-export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType
-
-export const addPostAC = (postText: string) => {
-    return {
-        type: "ADD-POST",
-        postText: postText
-    } as const
-}
-export const changeNewTextAC = (newText: string) => {
-    return {
-        type: 'UPDATE-NEW-POST-TEXT',
-        newText: newText
-    } as const
-}
+export const addPostAC = (postText: string) => ({ type: ADD_POST, postText: postText} as const)
+export const updateNewPostTextAC = (newText: string) =>
+    ({type: UPDATE_NEW_POST_TEXT, newText: newText} as const)
+export const addMessageAC = (newMessage: string) => ({ type: ADD_MESSAGE, newMessageText: newMessage} as const)
+export const updateNewMessageTextAC = (newMessage: string) => ({type: UPDATE_NEW_MESSAGE_TEXT, message: newMessage} as const)
 
 export const store: StoreType = {
     _state: {
@@ -134,6 +121,7 @@ export const store: StoreType = {
                 {id: v1(), name: 'Maksim'},
                 {id: v1(), name: 'Katya'},
             ],
+            newMessageText: '',
             messages: [
                 {id: v1(), message: 'Hi'},
                 {id: v1(), message: 'How are you?'},
@@ -147,7 +135,7 @@ export const store: StoreType = {
     getState() {
         return this._state;
     },
-    _callSubscriber() {
+    _callSubscriber(state:RootStateType) {
         console.log('State changed!')
     },
     subscribe(observer) {
@@ -155,28 +143,25 @@ export const store: StoreType = {
     },
 
     dispatch(action){
-        if(action.type === 'ADD-POST') {
+        if(action.type === ADD_POST) {
             let newPost: PostType = {id: v1(), message: action.postText, likesCount: 0}
             this._state.profilePage.posts.push(newPost)
             this._state.profilePage.newPostText = ''
-            this._callSubscriber()
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this._callSubscriber(this._state)
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.newText
-            this._callSubscriber()
+            this._callSubscriber(this._state)
+        } else if (action.type === ADD_MESSAGE) {
+            let newMessage:MessageType = {id: v1(), message: action.newMessageText}
+            this._state.dialogsPage.messages.push(newMessage)
+            this._state.dialogsPage.newMessageText = ''
+            this._callSubscriber(this._state)
+        } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
+            this._state.dialogsPage.newMessageText = action.message
+            this._callSubscriber(this._state)
         }
     },
 
-
-    // addPost(postMessage: string) {
-    //     let newPost: PostType = {id: v1(), message: postMessage, likesCount: 0}
-    //     this._state.profilePage.posts.push(newPost)
-    //     this._state.profilePage.newPostText = ''
-    //     this._callSubscriber()
-    // },
-    // updateNewPostText(newText: string) {
-    //     this._state.profilePage.newPostText = newText
-    //     this._callSubscriber()
-    // },
 }
 
 export default store;
@@ -185,3 +170,14 @@ export default store;
 
 
 
+// type AddPostActionType = {
+//     type: 'ADD-POST'
+//     postText: string
+// }   или
+// type AddPostActionType = ReturnType<typeof addPostAC>
+
+// type UpdateNewPostTextActionType = {
+//     type: 'UPDATE-NEW-POST-TEXT'
+//     newText: string
+// }   или
+// type UpdateNewPostTextActionType = ReturnType<typeof changeNewTextAC>

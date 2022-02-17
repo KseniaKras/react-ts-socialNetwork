@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {store} from './redux/state';
+import {RootStateType, store} from './redux/state';
 
 
-let rerenderEntireTree = () => {
+let rerenderEntireTree = (state: RootStateType) => {
     ReactDOM.render(
         <App
             state={store.getState()}
@@ -15,7 +15,7 @@ let rerenderEntireTree = () => {
     );
 }
 
-rerenderEntireTree();
+rerenderEntireTree(store.getState());
 store.subscribe(rerenderEntireTree)
 
 

@@ -29,7 +29,7 @@ function App({state,dispatch,...props}:AppPropsType) {
                         <Route path={'/profile/*'} element={<Profile profilePage={state.profilePage}
                                                                      dispatch={dispatch}
                         />}/>
-                        <Route path={'/dialogs/*'} element={<Dialogs myState={state.dialogsPage}/>}/>
+                        <Route path={'/dialogs/*'} element={<Dialogs myState={state.dialogsPage} dispatch={dispatch}/>}/>
                         <Route path={'/music'} element={<Music/>} />
                         <Route path={'/news'} element={<News/>} />
                         <Route path={'/settings'} element={<Settings/>} />
