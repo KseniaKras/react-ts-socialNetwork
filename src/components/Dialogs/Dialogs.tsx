@@ -3,7 +3,9 @@ import './Dialogs.module.css'
 import c from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {ActionsTypes, addMessageAC, DialogsPageType, updateNewMessageTextAC} from "../../redux/state";
+import {ActionsTypes, DialogsPageType} from "../../redux/store";
+import {addMessageAC, updateNewMessageTextAC} from "../../redux/dialogs-reducer";
+
 
 type DialogsPropsType = {
     myState: DialogsPageType

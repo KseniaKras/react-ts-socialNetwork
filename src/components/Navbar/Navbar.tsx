@@ -2,7 +2,7 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import './Navbar.module.css'
 import c from './Navbar.module.css';
-import {NavLinkDataType} from "../../redux/state";
+import {NavLinkDataType} from "../../redux/store";
 
 type NavbarPropsType = {
     myState: Array<NavLinkDataType>

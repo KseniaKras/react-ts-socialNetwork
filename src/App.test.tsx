@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
-import state, {store} from "./redux/state";
+import state, {store} from "./redux/store";
 
 test('renders learn react link', () => {
   render(<App state={store.getState()}

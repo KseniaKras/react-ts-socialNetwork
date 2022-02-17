@@ -3,7 +3,7 @@ import './Profile.module.css'
 import c from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ActionsTypes, ProfilePageType} from "../../redux/state";
+import {ActionsTypes, ProfilePageType} from "../../redux/store";
 
 
 type ProfilePropsType = {
@@ -23,5 +23,6 @@ function Profile({profilePage,dispatch,...props}: ProfilePropsType) {
         </div>
     );
 }
+
 
 export default Profile;
