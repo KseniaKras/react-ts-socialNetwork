@@ -3,52 +3,43 @@ import './Dialogs.module.css'
 import c from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {ActionsTypes, DialogsPageType} from "../../redux/store";
-import {addMessageAC, updateNewMessageTextAC} from "../../redux/dialogs-reducer";
+import {DialogsPageType} from "../../redux/dialogs-reducer";
 
 
 type DialogsPropsType = {
-    myState: DialogsPageType
-    dispatch: (action: ActionsTypes)=>void
+    dialogsPage: DialogsPageType
+    updateNewMessageText: (newMessage: string) => void
+    addMessage: () => void
 }
 
-function Dialogs(props: DialogsPropsType) {
+function Dialogs({dialogsPage, updateNewMessageText, addMessage}: DialogsPropsType) {
 
-    let message = props.myState.newMessageText
+    let DialogsElements = dialogsPage.dialogs.map(d => <DialogItem id={d.id} name={d.name}/>)
+    let MessagesElements = dialogsPage.messages.map(m => <Message message={m.message}/>)
 
-    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newMessage = e.currentTarget.value
-        props.dispatch( updateNewMessageTextAC(newMessage) )
+        updateNewMessageText(newMessage)
     }
 
-    const addMessageHandler = () => {
-        props.dispatch( addMessageAC(message) )
-    }
+    const onAddMessageHandler = () => addMessage()
 
     const onKeyPressAddMessage = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        if(e.key === 'Enter') {
-            addMessageHandler()
+        if (e.key === 'Enter') {
+            onAddMessageHandler()
         }
     }
 
     return (
         <div className={c.dialogs}>
             <div className={c.dialogsItems}>
-                {props.myState.dialogs.map(d => {
-                    return (
-                        <DialogItem id={d.id} name={d.name}/>
-                    )
-                })}
-
+                {DialogsElements}
             </div>
             <div className={c.messages}>
-                {props.myState.messages.map(m => {
-                    return (
-                        <Message message={m.message}/>
-                    )
-                })}
-                <textarea value={message} onChange={onChangeHandler} onKeyPress={onKeyPressAddMessage}/>
-                <button onClick={addMessageHandler}>add</button>
+                {MessagesElements}
+
+                <textarea value={dialogsPage.newMessageText} onChange={onChangeMessageHandler} onKeyPress={onKeyPressAddMessage}/>
+                <button onClick={onAddMessageHandler}>add</button>
             </div>
 
         </div>

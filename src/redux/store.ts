@@ -1,64 +1,63 @@
 import {v1} from "uuid";
-import profileReducer, {addPostAC, updateNewPostTextAC} from "./profile-reducer";
-import dialogsReducer, {addMessageAC, updateNewMessageTextAC} from "./dialogs-reducer";
+import profileReducer from "./profile-reducer";
+import dialogsReducer from "./dialogs-reducer";
+import navbarReducer from "./navbar-reducer";
+import {ActionsTypes} from "./redux-store";
 
-export type MessageType = {
+type MessageType = {
     id: string
     message: string
 }
-export type DialogsType = {
+type DialogsType = {
     id: string
     name: string
 }
-export type PostType = {
+type PostType = {
     id: string
     //avatar: string
     message: string
     likesCount: number
 }
-export type ProfileDataType = {
+type ProfileDataType = {
     image: string
 }
-export type DialogsPageType = {
+type DialogsPageType = {
     dialogs: Array<DialogsType>
     newMessageText: string
     messages: Array<MessageType>
 }
-export type ProfilePageType = {
+type ProfilePageType = {
     profileData: ProfileDataType
     newPostText: string
     posts: Array<PostType>
 }
-export type NavLinkDataType = {
+type NavLinkDataType = {
     id: string
     path: string
     title: string
 }
-export type NavbarType = {
+type NavbarType = {
     NavLinkData: Array<NavLinkDataType>
 }
-export type HeaderType = {
+type HeaderType = {
     logo: string
 }
-export type RootStateType = {
+type StateType = {
     header: HeaderType
     navbar: NavbarType
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
 }
 export type StoreType = {
-    _state: RootStateType
-    getState: () => RootStateType
-    _callSubscriber: (state:RootStateType) => void
-    subscribe: (observer: (state:RootStateType) => void) => void
+    _state: StateType
+    getState: () => StateType
+    _callSubscriber: (state:StateType) => void
+    subscribe: (observer: (state:StateType) => void) => void
     dispatch: (action: ActionsTypes)=>void
 }
 
-export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof updateNewPostTextAC> |
-    ReturnType<typeof addMessageAC> | ReturnType<typeof updateNewMessageTextAC>
 
-
-export const store: StoreType = {
+const store: StoreType = {
     _state: {
         header: {
             logo: 'https://png.pngtree.com/png-vector/20191206/ourlarge/pngtree-panda-vector-logo-design-png-image_2076518.jpg'
@@ -127,7 +126,7 @@ export const store: StoreType = {
     getState() {
         return this._state;
     },
-    _callSubscriber(state:RootStateType) {
+    _callSubscriber(state:StateType) {
         console.log('State changed!')
     },
     subscribe(observer) {
@@ -138,12 +137,11 @@ export const store: StoreType = {
 
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._state.navbar = navbarReducer(this._state.navbar, action)
 
         this._callSubscriber(this._state)
     },
 }
-
-export default store;
 
 
 // window.store = store

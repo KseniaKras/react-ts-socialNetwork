@@ -2,26 +2,24 @@ import React, {ChangeEvent} from 'react';
 import './MyPosts.module.css'
 import Post from "./Post/Post";
 import c from './MyPosts.module.css';
-import {ActionsTypes, PostType} from "../../../redux/store";
-import {addPostAC, updateNewPostTextAC} from "../../../redux/profile-reducer";
+import {ProfilePageType} from "../../../redux/profile-reducer";
 
 
 type MyPostsPropsType = {
-    posts: Array<PostType>
-    newPostMessage: string
-    dispatch: (action: ActionsTypes)=>void
+    profilePage: ProfilePageType
+    addPost: ()=>void
+    updateNewPostText: (newText: string)=>void
 }
 
-function MyPosts({posts,newPostMessage,dispatch,...props}: MyPostsPropsType) {
-   // const newPostElement = React.createRef<HTMLTextAreaElement>()
+function MyPosts({profilePage,addPost,updateNewPostText,...props}: MyPostsPropsType) {
 
-    const addPost = () => {
-        dispatch( addPostAC(newPostMessage) )
-    }
+    let postsElements = profilePage.posts.map( p => <Post message={p.message} likesCount={p.likesCount}/> )
 
-    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const onAddPostHandler = () => addPost()
+
+    const onPostChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newText = e.currentTarget.value
-        dispatch( updateNewPostTextAC(newText) )
+        updateNewPostText(newText)
     }
 
     return (
@@ -29,20 +27,14 @@ function MyPosts({posts,newPostMessage,dispatch,...props}: MyPostsPropsType) {
             <h3>My Posts</h3>
             <div>
                 <div>
-                    {/*<textarea ref={newPostElement}/>*/}
-                    <textarea value={newPostMessage} onChange={ onPostChange }/>
+                    <textarea value={ profilePage.newPostText } onChange={ onPostChangeHandler }/>
                 </div>
                 <div>
-                    <button onClick={addPost}>Add Post</button>
+                    <button onClick={ onAddPostHandler }>Add Post</button>
                 </div>
             </div>
             <div className={c.post}>
-                {posts.map(p => {
-                    return (
-                        <Post message={p.message} likesCount={p.likesCount}/>
-                    )
-                })}
-
+                {postsElements}
             </div>
         </div>
     );

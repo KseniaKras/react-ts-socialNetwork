@@ -1,6 +1,7 @@
 import React from 'react';
 import c from './ProfileInfo.module.css';
-import {ProfileDataType} from "../../../redux/store";
+import {ProfileDataType} from "../../../redux/profile-reducer";
+
 
 type ProfileInfoPropsType = {
     profileInfoState: ProfileDataType
