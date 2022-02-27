@@ -18,6 +18,7 @@ function MyPosts({profilePage,addPost,updateNewPostText,...props}: MyPostsPropsT
     const onAddPostHandler = () => addPost()
 
     const onPostChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        //debugger
         let newText = e.currentTarget.value
         updateNewPostText(newText)
     }

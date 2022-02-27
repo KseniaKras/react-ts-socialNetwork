@@ -42,7 +42,7 @@ type NavbarType = {
 type HeaderType = {
     logo: string
 }
-type StateType = {
+export type StateType = {
     header: HeaderType
     navbar: NavbarType
     profilePage: ProfilePageType

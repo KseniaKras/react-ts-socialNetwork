@@ -23,7 +23,7 @@ let initialState = {
     profileData: {
         image: 'http://ic.pics.livejournal.com/jazztour/50295466/797314/797314_original.jpg'
     },
-    newPostText: '',
+    newPostText: 'My first post',
     posts: [
         {
             id: v1(),
@@ -54,23 +54,26 @@ let initialState = {
 
 
 const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes):ProfilePageType => {
-    debugger
+
     switch (action.type) {
         case ADD_POST:
-            let newPost: PostType = {id: v1(), message: action.postText, likesCount: 0}
-            state.posts.push(newPost)
-            state.newPostText = '';
-            return state
+            let newPost: PostType = {id: v1(), message: state.newPostText, likesCount: 0}
+            return {
+                ...state,
+                newPostText: '',
+                posts: [newPost,...state.posts]
+            }
         case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newText
-            return state
+            return {
+                ...state,
+                newPostText: action.newText
+            }
         default:
             return state
     }
 }
 
 export const addPostAC = () => ({type: ADD_POST, postText: initialState.newPostText} as const)
-export const updateNewPostTextAC = (newText: string) =>
-    ({type: UPDATE_NEW_POST_TEXT, newText: newText} as const)
+export const updateNewPostTextAC = (newText: string) => ({type: UPDATE_NEW_POST_TEXT, newText: newText} as const )
 
 export default profileReducer;
