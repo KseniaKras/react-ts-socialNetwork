@@ -14,6 +14,7 @@ let initialState: NavbarType = {
     NavLinkData: [
         {id: v1(), path: '/profile', title: 'Profile'},
         {id: v1(), path: '/dialogs', title: 'Messages'},
+        {id: v1(), path: '/users', title: 'Users'},
         {id: v1(), path: '/news', title: 'News'},
         {id: v1(), path: '/music', title: 'Music'},
         {id: v1(), path: '/settings', title: 'Settings'},

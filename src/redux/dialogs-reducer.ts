@@ -1,8 +1,8 @@
 import {v1} from "uuid";
 import {ActionsTypes} from "./redux-store";
 
-const ADD_MESSAGE = 'ADD-MESSAGE'
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT'
+// const ADD_MESSAGE = 'ADD-MESSAGE'
+// const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT'
 
 export type MessageType = {
     id: string
@@ -39,14 +39,14 @@ let initialState = {
 const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes): DialogsPageType => {
 
     switch (action.type) {
-        case ADD_MESSAGE:
+        case 'ADD-MESSAGE':
             let newMessage: MessageType = {id: v1(), message: state.newMessageText}
             return {
                 ...state,
                 newMessageText: '',
                 messages: [...state.messages, newMessage]
             }
-        case UPDATE_NEW_MESSAGE_TEXT:
+        case 'UPDATE_NEW_MESSAGE_TEXT':
             return {
                 ...state,
                 newMessageText: action.message
@@ -56,9 +56,9 @@ const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTy
     }
 }
 
-export const addMessageAC = () => ({type: ADD_MESSAGE, newMessageText: initialState.newMessageText} as const)
+export const addMessageAC = () => ({type: 'ADD-MESSAGE', newMessageText: initialState.newMessageText} as const)
 export const updateNewMessageTextAC = (newMessage: string) => ({
-    type: UPDATE_NEW_MESSAGE_TEXT,
+    type: 'UPDATE_NEW_MESSAGE_TEXT',
     message: newMessage
 } as const)
 
