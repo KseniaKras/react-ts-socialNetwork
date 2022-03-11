@@ -53,7 +53,7 @@ let initialState = {
 }
 
 
-const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes):ProfilePageType => {
+const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes): ProfilePageType => {
 
     switch (action.type) {
         case ADD_POST:
@@ -61,7 +61,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
             return {
                 ...state,
                 newPostText: '',
-                posts: [newPost,...state.posts]
+                posts: [newPost, ...state.posts]
             }
         case UPDATE_NEW_POST_TEXT:
             return {
@@ -74,6 +74,6 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
 }
 
 export const addPostAC = () => ({type: ADD_POST, postText: initialState.newPostText} as const)
-export const updateNewPostTextAC = (newText: string) => ({type: UPDATE_NEW_POST_TEXT, newText: newText} as const )
+export const updateNewPostTextAC = (newText: string) => ({type: UPDATE_NEW_POST_TEXT, newText: newText} as const)
 
 export default profileReducer;

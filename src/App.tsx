@@ -13,22 +13,22 @@ import UsersContainer from "./components/Users/UsersContainer";
 
 
 function App() {
-    //console.log(store.getState().profilePage.posts.length)
+
     const myState = store.getState()
     return (
         <div className='app-wrapper'>
-                <Header logo={myState.header.logo}/>
-                <Navbar myState={myState.navbar.NavLinkData}/>
-                <div className='app-wrapper-content'>
-                    <Routes>
-                        <Route path={'/profile/*'} element={<Profile /> }/>
-                        <Route path={'/dialogs/'} element={<DialogsContainer />}/>
-                        <Route path={'/users/'} element={<UsersContainer />}/>
-                        <Route path={'/music'} element={<Music/>} />
-                        <Route path={'/news'} element={<News/>} />
-                        <Route path={'/settings'} element={<Settings/>} />
-                    </Routes>
-                </div>
+            <Header logo={myState.header.logo}/>
+            <Navbar myState={myState.navbar.NavLinkData}/>
+            <div className='app-wrapper-content'>
+                <Routes>
+                    <Route path={'/profile/*'} element={<Profile/>}/>
+                    <Route path={'/dialogs/'} element={<DialogsContainer/>}/>
+                    <Route path={'/users/'} element={<UsersContainer />}/>
+                    <Route path={'/music'} element={<Music/>}/>
+                    <Route path={'/news'} element={<News/>}/>
+                    <Route path={'/settings'} element={<Settings/>}/>
+                </Routes>
+            </div>
         </div>
 
     );

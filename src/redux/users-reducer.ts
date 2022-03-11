@@ -3,31 +3,46 @@ import {v1} from "uuid";
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET-USERS'
+const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
 
-export type ActionsType = ReturnType<typeof followAC> | ReturnType<typeof unfollowAC> | ReturnType<typeof setUsersAC>
+export type ActionsType = ReturnType<typeof followAC> | ReturnType<typeof unfollowAC> | ReturnType<typeof setUsersAC> |
+    ReturnType<typeof setCurrentPage>
 
 export type LocationType = {
     city: string
     country: string
 }
+// export type UserType = {
+//     id: string
+//     photoUrl: string
+//     followed: boolean
+//     fullName: string
+//     status: string
+//     location: LocationType
+// }
 export type UserType = {
-    id: string
-    photoUrl: string
+    name: string
+    id: number
+    uniqueUrlName: null
+    photos: {
+        small:  null
+        large:  null
+    }
+    status: null | string
     followed: boolean
-    fullName: string
-    status: string
-    location: LocationType
 }
 type initialStateType = {
     users: UserType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
 }
 
 let initialState: initialStateType = {
-    users: [
-       // {id: v1(), photoUrl: 'https://uprostim.com/wp-content/uploads/2021/03/image011-99-555x720.jpg', followed: false, fullName: 'Ksenia', status: 'I\'m a boss', location: {city:'Minsk', country: 'Belarus'}},
-       // {id: v1(), photoUrl: 'https://i.pinimg.com/736x/4a/9c/d5/4a9cd57d44157fa8401d1662e0ed6f51.jpg', followed: true, fullName: 'Maksim', status: 'I\'m a boss too', location: {city:'Minsk', country: 'Belarus'}},
-       // {id: v1(), photoUrl: 'https://papik.pro/uploads/posts/2021-09/1631825667_5-papik-pro-p-krasivie-avatarki-risunki-5.jpg', followed: true, fullName: 'Irina', status: 'I\'m a big boss', location: {city:'Minsk', country: 'Belarus'}},
-    ]
+    users: [],
+    pageSize: 10,
+    totalUsersCount: 21,
+    currentPage: 1,
 }
 
 
@@ -48,6 +63,11 @@ export const usersReducer = (state = initialState, action: ActionsType) => {
                 ...state,
                 users: [...state.users, ...action.users]
             }
+        case SET_CURRENT_PAGE:
+            return {
+                ...state,
+                currentPage: action.currentPage
+            }
         default:
             return state
     }
@@ -55,7 +75,8 @@ export const usersReducer = (state = initialState, action: ActionsType) => {
 
 }
 
-export const followAC = (userId: string) => ({type: FOLLOW, userId} as const)
-export const unfollowAC = (userId: string) => ({type: UNFOLLOW, userId} as const)
+export const followAC = (userId: number) => ({type: FOLLOW, userId} as const)
+export const unfollowAC = (userId: number) => ({type: UNFOLLOW, userId} as const)
 export const setUsersAC = (users: UserType[]) => ({type: SET_USERS, users} as const)
+export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
 

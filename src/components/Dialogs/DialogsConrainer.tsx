@@ -8,23 +8,23 @@ type mapStateToPropsType = {
     dialogsPage: DialogsPageType
 }
 
-let mapStateToProps = (state: AppStateType):mapStateToPropsType => {
+let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
         dialogsPage: state.dialogsPage
     }
 }
 
 type mapDispatchToPropsType = {
-    updateNewMessageText: (newMessage: string)=>void
-    addMessage:  ()=>void
+    updateNewMessageText: (newMessage: string) => void
+    addMessage: () => void
 }
 
-let mapDispatchToProps = (dispatch: (action: ActionsTypes)=>void):mapDispatchToPropsType => {
+let mapDispatchToProps = (dispatch: (action: ActionsTypes) => void): mapDispatchToPropsType => {
     return {
-        updateNewMessageText: (newMessage: string)=>{
+        updateNewMessageText: (newMessage: string) => {
             dispatch(updateNewMessageTextAC(newMessage))
         },
-        addMessage: ()=>{
+        addMessage: () => {
             dispatch(addMessageAC())
         }
     }

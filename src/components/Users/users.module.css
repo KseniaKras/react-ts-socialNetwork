@@ -1,5 +1,23 @@
+.usersBlock {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.userItem {
+    width: 150px;
+    padding: 15px;
+    margin: 10px;
+
+}
+
 .userAvatar {
     width: 80px;
     height: 80px;
     border-radius: 40px;
+}
+
+.selectedPage {
+    font-weight: bold;
 }
