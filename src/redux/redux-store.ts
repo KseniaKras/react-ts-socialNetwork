@@ -3,7 +3,7 @@ import profileReducer, {addPostAC, updateNewPostTextAC} from "./profile-reducer"
 import dialogsReducer, {addMessageAC, updateNewMessageTextAC} from "./dialogs-reducer";
 import navbarReducer from "./navbar-reducer";
 import headerReducer from "./header-reducer";
-import {followAC, setUsersAC, unfollowAC, usersReducer} from "./users-reducer";
+import {usersReducer} from "./users-reducer";
 
 type RootReducerType = typeof rootReducer;
 export type AppStateType = ReturnType<RootReducerType>
