@@ -1,15 +1,35 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {ActionsType, followAC, setCurrentPage, setUsersAC, unfollowAC, UserType} from "../../redux/users-reducer";
+import {
+    ActionsType,
+    followAC,
+    setCurrentPageAC, setTotalUsersCountAC,
+    setUsersAC,
+    unfollowAC,
+    UserType
+} from "../../redux/users-reducer";
 import {AppStateType} from "../../redux/redux-store";
-// import {Users} from "./Users";
-import UsersC from "./UsersC";
+import axios from "axios";
+import Users from "./users";
 
+
+type UsersContainerType = {
+    users: UserType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    follow: (usersId: number) => void
+    unfollow: (userId: number) => void
+    setUsers: (users: UserType[]) => void
+    setCurrentPage: (currentPage: number) => void
+    setTotalUsersCount: (totalUsersCount: number) => void
+}
 type mapDispatchToPropsType = {
     follow: (usersId: number) => void
     unfollow: (usersId: number) => void
     setUsers: (users: UserType[]) => void
     setCurrentPage: (currentPage: number) => void
+    setTotalUsersCount: (totalUsersCount: number) => void
 }
 type mapStateToPropsType = {
     users: UserType[]
@@ -18,12 +38,43 @@ type mapStateToPropsType = {
     currentPage: number
 }
 
+
+class UsersContainer extends React.Component<UsersContainerType> {
+
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items);
+                this.props.setTotalUsersCount(response.data.totalCount);
+            });
+    }
+
+    onPageChanged = (pageNumber: number) => {
+        this.props.setCurrentPage(pageNumber)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items);
+            });
+    }
+
+    render() {
+        return <Users users={this.props.users}
+                      currentPage={this.props.currentPage}
+                      pageSize={this.props.pageSize}
+                      totalUsersCount={this.props.totalUsersCount}
+                      onPageChanged={this.onPageChanged}
+                      follow={this.props.follow}
+                      unfollow={this.props.unfollow}/>
+    }
+}
+
 const mapDispatchToProps = (dispatch: (action: ActionsType) => void): mapDispatchToPropsType => {
     return {
         follow: (usersId: number) => dispatch(followAC(usersId)),
         unfollow: (userId: number) => dispatch(unfollowAC(userId)),
         setUsers: (users: UserType[]) => dispatch(setUsersAC(users)),
-        setCurrentPage: (currentPage: number) => dispatch(setCurrentPage(currentPage))
+        setCurrentPage: (currentPage: number) => dispatch(setCurrentPageAC(currentPage)),
+        setTotalUsersCount: (totalCount: number) => dispatch(setTotalUsersCountAC(totalCount)),
     }
 }
 
@@ -36,8 +87,5 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     }
 }
 
-// const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users)
-const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersC)
-
-export default UsersContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
 

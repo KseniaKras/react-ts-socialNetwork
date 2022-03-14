@@ -12,7 +12,7 @@ type UsersType = {
     setUsers: (users: UserType[]) => void
 }
 
-export const Users = ({users, follow, unfollow, setUsers}: UsersType) => {
+export const UsersOld = ({users, follow, unfollow, setUsers}: UsersType) => {
 
     let getUsers = () => {
         if (users.length === 0) {
