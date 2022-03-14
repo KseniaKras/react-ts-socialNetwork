@@ -3,13 +3,18 @@ import './Profile.module.css'
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import store from "../../redux/redux-store";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import {ProfileType} from "../../redux/profile-reducer";
 
+type ProfilePropsType = {
+    profile: null | ProfileType
+    setProfile: (profile: ProfileType) => void
+}
 
-function Profile() {
+function Profile(props: ProfilePropsType) {
 
     return (
         <div>
-            <ProfileInfo profileInfoState={store.getState().profilePage.profileData}/>
+            <ProfileInfo profile={props.profile} />
             <MyPostsContainer />
         </div>
     );

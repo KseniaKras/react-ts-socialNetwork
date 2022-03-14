@@ -1,8 +1,12 @@
 import {v1} from "uuid";
-import {ActionsTypes} from "./redux-store";
 
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+const SET_PROFILE = 'SET-PROFILE'
+
+
+export type ActionsTypes = ReturnType<typeof addPost> | ReturnType<typeof updateNewPostText>
+    | ReturnType<typeof setProfile>
 
 export type PostType = {
     id: string
@@ -10,19 +14,33 @@ export type PostType = {
     message: string
     likesCount: number
 }
-export type ProfileDataType = {
-    image: string
+export type ProfileType = {
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: {
+        github: string
+        vk: string
+        facebook: string
+        instagram: string
+        twitter: string
+        website: string
+        youtube: string
+        mainLink: string
+    }
+    photos: {
+        small: string
+        large: string
+    }
 }
 export type ProfilePageType = {
-    profileData: ProfileDataType
     newPostText: string
     posts: Array<PostType>
+    profile: null | ProfileType
 }
 
 let initialState = {
-    profileData: {
-        image: 'http://ic.pics.livejournal.com/jazztour/50295466/797314/797314_original.jpg'
-    },
     newPostText: 'My first post',
     posts: [
         {
@@ -50,6 +68,7 @@ let initialState = {
             likesCount: 35,
         },
     ],
+    profile: null,
 }
 
 
@@ -68,12 +87,18 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
                 ...state,
                 newPostText: action.newText
             }
+        case SET_PROFILE:
+            return {
+                ...state,
+                profile: action.profile
+            }
         default:
             return state
     }
 }
 
-export const addPostAC = () => ({type: ADD_POST, postText: initialState.newPostText} as const)
-export const updateNewPostTextAC = (newText: string) => ({type: UPDATE_NEW_POST_TEXT, newText: newText} as const)
+export const addPost = () => ({type: ADD_POST, postText: initialState.newPostText} as const)
+export const updateNewPostText = (newText: string) => ({type: UPDATE_NEW_POST_TEXT, newText: newText} as const)
+export const setProfile = (profile: ProfileType) => ({type: SET_PROFILE, profile} as const)
 
 export default profileReducer;

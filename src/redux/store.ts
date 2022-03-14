@@ -126,37 +126,20 @@ const store: StoreType = {
     getState() {
         return this._state;
     },
-    _callSubscriber(state:StateType) {
+    _callSubscriber(state: StateType) {
         console.log('State changed!')
     },
     subscribe(observer) {
         this._callSubscriber = observer
     },
 
-    dispatch(action){
-
-        this._state.profilePage = profileReducer(this._state.profilePage, action)
-        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
-        this._state.navbar = navbarReducer(this._state.navbar, action)
-
-        this._callSubscriber(this._state)
-    },
+    dispatch(action) {
+//
+//         this._state.profilePage = profileReducer(this._state.profilePage, action)
+//         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+//         this._state.navbar = navbarReducer(this._state.navbar, action)
+//
+//         this._callSubscriber(this._state)
+//     },
+    }
 }
-
-
-// window.store = store
-
-
-
-
-// type AddPostActionType = {
-//     type: 'ADD-POST'
-//     postText: string
-// }   или
-// type AddPostActionType = ReturnType<typeof addPostAC>
-
-// type UpdateNewPostTextActionType = {
-//     type: 'UPDATE-NEW-POST-TEXT'
-//     newText: string
-// }   или
-// type UpdateNewPostTextActionType = ReturnType<typeof changeNewTextAC>

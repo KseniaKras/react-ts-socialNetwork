@@ -1,22 +1,28 @@
 import React from 'react';
 import c from './ProfileInfo.module.css';
-import {ProfileDataType} from "../../../redux/profile-reducer";
+import {ProfileType} from "../../../redux/profile-reducer";
+import Preloader from "../../common/Preloader/preloader";
 
 
 type ProfileInfoPropsType = {
-    profileInfoState: ProfileDataType
+    profile: ProfileType | null
 }
 
 function ProfileInfo(props: ProfileInfoPropsType) {
+    if(!props.profile == null) {
+        return <Preloader/>
+    }
+
     return (
         <div>
             <div className={c.image}>
-                <img src={props.profileInfoState.image}
+                <img src={'http://ic.pics.livejournal.com/jazztour/50295466/797314/797314_original.jpg'}
                      alt=""
                      className={c.imageItem}
                 />
             </div>
             <div>
+                <img src={props.profile?.photos.large} />
                 ava+description
             </div>
         </div>
