@@ -4,6 +4,7 @@ import dialogsReducer, {addMessageAC, updateNewMessageTextAC} from "./dialogs-re
 import navbarReducer from "./navbar-reducer";
 import headerReducer from "./header-reducer";
 import {usersReducer} from "./users-reducer";
+import {authReducer} from "./auth-reducer";
 
 type RootReducerType = typeof rootReducer;
 export type AppStateType = ReturnType<RootReducerType>
@@ -13,6 +14,7 @@ let rootReducer = combineReducers({
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
     navbar: navbarReducer,
+    auth: authReducer,
     header: headerReducer,
 })
 

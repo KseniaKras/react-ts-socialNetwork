@@ -3,6 +3,7 @@ import s from "./users.module.css";
 import userPhoto from "../assets/images/userCommon.png";
 import {UserType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
+import axios from "axios";
 
 
 type UsersPropsType = {
@@ -35,8 +36,34 @@ const Users = (props: UsersPropsType) => {
             <div className={s.usersBlock}>
                 {
                     props.users.map(u => {
-                        const onFollowHandler = () => props.follow(u.id)
-                        const onUnfollowHandler = () => props.unfollow(u.id)
+                        const onFollowHandler = () => {
+                            axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {},{
+                                withCredentials: true,
+                                headers: {
+                                    'API-KEY': 'f72a4300-5ed0-4f0c-be33-a4b81b2c145d'
+                                },
+                            })
+                                .then(res => {
+                                    if (res.data.resultCode === 0) {
+                                        props.follow(u.id)
+                                    }
+                                })
+
+                        }
+                        const onUnfollowHandler = () => {
+                            axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                                withCredentials: true,
+                                headers: {
+                                    'API-KEY': 'f72a4300-5ed0-4f0c-be33-a4b81b2c145d'
+                                },
+                            })
+                                .then(res => {
+                                    if (res.data.resultCode === 0) {
+                                        props.unfollow(u.id)
+                                    }
+                                })
+
+                        }
                         return <div key={u.id} className={s.userItem}>
                     <span>
                         <div>

@@ -10,6 +10,7 @@ import DialogsContainer from "./components/Dialogs/DialogsConrainer";
 import store from "./redux/redux-store";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 
 function App() {
@@ -17,11 +18,13 @@ function App() {
     const myState = store.getState()
     return (
         <div className='app-wrapper'>
-            <Header logo={myState.header.logo}/>
+            <HeaderContainer/>
             <Navbar myState={myState.navbar.NavLinkData}/>
             <div className='app-wrapper-content'>
                 <Routes>
-                    <Route path={'/profile/*'} element={<ProfileContainer/>}/>
+                    <Route path={'/profile/:userId?'} element={<ProfileContainer/>}/>
+                      {/*  <Route path={':userId'} element={<ProfileContainer/>}/>
+                    </Route>*/}
                     <Route path={'/dialogs/*'} element={<DialogsContainer/>}/>
                     <Route path={'/users/'} element={<UsersContainer />}/>
                     <Route path={'/music'} element={<Music/>}/>

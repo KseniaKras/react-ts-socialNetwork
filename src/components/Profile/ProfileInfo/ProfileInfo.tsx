@@ -1,11 +1,12 @@
 import React from 'react';
 import c from './ProfileInfo.module.css';
-import {ProfileType} from "../../../redux/profile-reducer";
+import {ProfileAPIType} from "../../../redux/profile-reducer";
 import Preloader from "../../common/Preloader/preloader";
+import userPhoto from "../../assets/images/userCommon.png";
 
 
 type ProfileInfoPropsType = {
-    profile: ProfileType | null
+    profile: ProfileAPIType | null
 }
 
 function ProfileInfo(props: ProfileInfoPropsType) {
@@ -22,7 +23,8 @@ function ProfileInfo(props: ProfileInfoPropsType) {
                 />
             </div>
             <div>
-                <img src={props.profile?.photos.large} />
+                {/*<img src={props.profile?.photos.small} />*/}
+                <img src={props.profile?.photos.large ?  props.profile.photos.large : userPhoto} className={c.avatar}/>
                 ava+description
             </div>
         </div>

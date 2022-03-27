@@ -1,33 +1,47 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import axios from "axios";
-import {ProfileType, setProfile} from "../../redux/profile-reducer";
+import {ProfileAPIType, setProfile} from "../../redux/profile-reducer";
+import {useParams} from "react-router-dom";
+
 
 type mapStateToPropsType = {
-    profile: null | ProfileType
+    profile: null | ProfileAPIType
 }
 
-type ProfileContainerType = {
-    profile: null | ProfileType
-    setProfile: (profile: ProfileType) => void
-}
+export type mapDispatchToPropsType = {
+    setProfile: (profile: ProfileAPIType) => void
+};
 
-class ProfileContainer extends React.Component<ProfileContainerType> {
+type ProfileContainerPropsType = mapStateToPropsType & mapDispatchToPropsType
 
-    componentDidMount() {
-        axios.get('https://social-network.samuraijs.com/api/1.0/profile/2')
-            .then(response => {
-                this.props.setProfile(response.data)
-            })
-    }
 
-    render() {
-        return (
-            <Profile {...this.props}/>
-        );
-    }
+const ProfileContainer = (props: ProfileContainerPropsType) => {
+
+   /* const dispatch = useDispatch()
+    const profile = useSelector<AppStateType, ProfileAPIType | null>(state => state.profilePage.profile)*/
+
+    let {userId} = useParams()
+
+    useEffect( ()=>{
+        if (!userId) {
+            userId='2'
+        }
+        //props.setProfile(userId)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId, {
+            withCredentials: true,
+        }).then(response => {
+            // dispatch(setProfile(response.data))
+
+        })
+
+    }, [userId] )
+
+    return (
+        <Profile {...props}/>
+    );
 }
 
 
@@ -36,6 +50,5 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
         profile: state.profilePage.profile,
     }
 }
-
 
 export default connect(mapStateToProps, { setProfile } )(ProfileContainer);

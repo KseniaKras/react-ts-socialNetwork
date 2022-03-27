@@ -14,8 +14,8 @@ export type PostType = {
     message: string
     likesCount: number
 }
-export type ProfileType = {
-    userId: number
+export type ProfileAPIType = {
+    userId: string
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
@@ -37,7 +37,7 @@ export type ProfileType = {
 export type ProfilePageType = {
     newPostText: string
     posts: Array<PostType>
-    profile: null | ProfileType
+    profile: ProfileAPIType | null
 }
 
 let initialState = {
@@ -99,6 +99,6 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
 
 export const addPost = () => ({type: ADD_POST, postText: initialState.newPostText} as const)
 export const updateNewPostText = (newText: string) => ({type: UPDATE_NEW_POST_TEXT, newText: newText} as const)
-export const setProfile = (profile: ProfileType) => ({type: SET_PROFILE, profile} as const)
+export const setProfile = (profile: ProfileAPIType) => ({type: SET_PROFILE, profile} as const)
 
 export default profileReducer;

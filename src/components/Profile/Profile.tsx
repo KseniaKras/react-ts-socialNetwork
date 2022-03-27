@@ -1,13 +1,12 @@
 import React from 'react';
 import './Profile.module.css'
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import store from "../../redux/redux-store";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {ProfileType} from "../../redux/profile-reducer";
+import {ProfileAPIType, ProfilePageType} from "../../redux/profile-reducer";
 
 type ProfilePropsType = {
-    profile: null | ProfileType
-    setProfile: (profile: ProfileType) => void
+    profile: ProfileAPIType | null
+    setProfile: (profile: ProfileAPIType) => void
 }
 
 function Profile(props: ProfilePropsType) {
