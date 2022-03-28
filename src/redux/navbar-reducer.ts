@@ -1,4 +1,3 @@
-import {ActionsTypes} from "./redux-store";
 import {v1} from "uuid";
 
 export type NavbarType = {
@@ -21,7 +20,7 @@ let initialState: NavbarType = {
     ],
 }
 
-const navbarReducer = (state = initialState, action: ActionsTypes): NavbarType => {
+const navbarReducer = (state = initialState, action: any): NavbarType => {
 
 
     return state

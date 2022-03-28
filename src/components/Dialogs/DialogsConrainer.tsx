@@ -1,25 +1,28 @@
 import React from 'react';
-import {addMessageAC, DialogsPageType, updateNewMessageTextAC} from "../../redux/dialogs-reducer";
+import {addMessageAC, DialogsActionsTypes, DialogsPageType, updateNewMessageTextAC} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
-import {ActionsTypes, AppStateType} from "../../redux/redux-store";
+import {AppStateType} from "../../redux/redux-store";
 
-type mapStateToPropsType = {
-    dialogsPage: DialogsPageType
-}
-
-let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
-    return {
-        dialogsPage: state.dialogsPage
-    }
-}
 
 type mapDispatchToPropsType = {
     updateNewMessageText: (newMessage: string) => void
     addMessage: () => void
 }
 
-let mapDispatchToProps = (dispatch: (action: ActionsTypes) => void): mapDispatchToPropsType => {
+type mapStateToPropsType = {
+    dialogsPage: DialogsPageType
+    isAuth: boolean
+}
+
+let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
+    return {
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth,
+    }
+}
+
+let mapDispatchToProps = (dispatch: (action: DialogsActionsTypes) => void): mapDispatchToPropsType => {
     return {
         updateNewMessageText: (newMessage: string) => {
             dispatch(updateNewMessageTextAC(newMessage))

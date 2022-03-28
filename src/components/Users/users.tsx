@@ -3,7 +3,6 @@ import s from "./users.module.css";
 import userPhoto from "../assets/images/userCommon.png";
 import {UserType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
-import {usersAPI} from "../../api/api";
 
 
 type UsersPropsType = {
@@ -12,10 +11,9 @@ type UsersPropsType = {
     onPageChanged: (pageNumber: number) => void
     currentPage: number
     users: UserType[]
-    follow: (usersId: number) => void
-    unfollow: (usersId: number) => void
+    followUserTC: (usersId: number) => void
+    unfollowUserTC: (usersId: number) => void
     isFollowing: number[]
-    toggleIsFollowingProgress: (isFollowing: boolean, userId: number) => void
 }
 
 const Users = (props: UsersPropsType) => {
@@ -39,31 +37,15 @@ const Users = (props: UsersPropsType) => {
                 {
                     props.users.map(u => {
                         const onFollowHandler = () => {
-                            props.toggleIsFollowingProgress(true, u.id)
-                            usersAPI.getFollowUser(u.id)
-                                .then(res => {
-                                    if (res.resultCode === 0) {
-                                        props.follow(u.id)
-                                    }
-                                    props.toggleIsFollowingProgress(false, u.id)
-                                })
-
+                            props.followUserTC(u.id)
                         }
                         const onUnfollowHandler = () => {
-                            props.toggleIsFollowingProgress(true, u.id)
-                            usersAPI.getUnfollowUser(u.id)
-                                .then(res => {
-                                    if (res.resultCode === 0) {
-                                        props.unfollow(u.id)
-                                    }
-                                    props.toggleIsFollowingProgress(false, u.id)
-                                })
-
+                            props.unfollowUserTC(u.id)
                         }
                         return <div key={u.id} className={s.userItem}>
                     <span>
                         <div>
-                            <NavLink to={'/profile/'}>
+                            <NavLink to={`/profile/${u.id}`}>
                                 <img src={u.photos.small != null ? u.photos.small : userPhoto}
                                      className={s.userAvatar}/>
                             </NavLink>

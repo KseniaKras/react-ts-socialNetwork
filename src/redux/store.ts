@@ -1,8 +1,5 @@
 import {v1} from "uuid";
-import profileReducer from "./profile-reducer";
-import dialogsReducer from "./dialogs-reducer";
-import navbarReducer from "./navbar-reducer";
-import {ActionsTypes} from "./redux-store";
+
 
 type MessageType = {
     id: string
@@ -53,7 +50,7 @@ export type StoreType = {
     getState: () => StateType
     _callSubscriber: (state:StateType) => void
     subscribe: (observer: (state:StateType) => void) => void
-    dispatch: (action: ActionsTypes)=>void
+    // dispatch: (action: ActionsTypes)=>void
 }
 
 
@@ -133,7 +130,7 @@ const store: StoreType = {
         this._callSubscriber = observer
     },
 
-    dispatch(action) {
+    // dispatch(action) {
 //
 //         this._state.profilePage = profileReducer(this._state.profilePage, action)
 //         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
@@ -141,5 +138,5 @@ const store: StoreType = {
 //
 //         this._callSubscriber(this._state)
 //     },
-    }
+//     }
 }

@@ -11,6 +11,7 @@ import store from "./redux/redux-store";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import {Login} from "./components/login/Login";
 
 
 function App() {
@@ -22,11 +23,12 @@ function App() {
             <Navbar myState={myState.navbar.NavLinkData}/>
             <div className='app-wrapper-content'>
                 <Routes>
-                    <Route path={'/profile/:userId?'} element={<ProfileContainer/>}/>
-                      {/*  <Route path={':userId'} element={<ProfileContainer/>}/>
-                    </Route>*/}
+                    <Route path={'/profile/'} element={<ProfileContainer/>}>
+                        <Route path={':userId'} element={<ProfileContainer/>}/>
+                    </Route>
                     <Route path={'/dialogs/*'} element={<DialogsContainer/>}/>
                     <Route path={'/users/'} element={<UsersContainer />}/>
+                    <Route path={'/login'} element={<Login />} />
                     <Route path={'/music'} element={<Music/>}/>
                     <Route path={'/news'} element={<News/>}/>
                     <Route path={'/settings'} element={<Settings/>}/>

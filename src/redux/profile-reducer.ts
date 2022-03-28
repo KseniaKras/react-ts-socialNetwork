@@ -1,11 +1,13 @@
 import {v1} from "uuid";
+import {Dispatch} from "redux";
+import {usersAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_PROFILE = 'SET-PROFILE'
 
 
-export type ActionsTypes = ReturnType<typeof addPost> | ReturnType<typeof updateNewPostText>
+export type ProfileActionsTypes = ReturnType<typeof addPost> | ReturnType<typeof updateNewPostText>
     | ReturnType<typeof setProfile>
 
 export type PostType = {
@@ -15,7 +17,7 @@ export type PostType = {
     likesCount: number
 }
 export type ProfileAPIType = {
-    userId: string
+    userId: number | string
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
@@ -72,7 +74,7 @@ let initialState = {
 }
 
 
-const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes): ProfilePageType => {
+const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionsTypes): ProfilePageType => {
 
     switch (action.type) {
         case ADD_POST:
@@ -100,5 +102,15 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
 export const addPost = () => ({type: ADD_POST, postText: initialState.newPostText} as const)
 export const updateNewPostText = (newText: string) => ({type: UPDATE_NEW_POST_TEXT, newText: newText} as const)
 export const setProfile = (profile: ProfileAPIType) => ({type: SET_PROFILE, profile} as const)
+
+export const getUserProfileTC = (userId: string) => {
+    return (dispatch: Dispatch<ProfileActionsTypes>) => {
+        //dispatch(setProfile())
+        usersAPI.getProfile(userId)
+            .then(res => {
+                dispatch(setProfile(res.data))
+        })
+    }
+}
 
 export default profileReducer;
