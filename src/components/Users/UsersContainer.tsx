@@ -10,6 +10,8 @@ import {
 import {AppStateType} from "../../redux/redux-store";
 import Users from "./users";
 import Preloader from "../common/Preloader/preloader";
+import {WithAuthRedirect} from "../hoc/WithAuthRedirect";
+import {compose} from "redux";
 
 
 
@@ -46,12 +48,6 @@ class UsersContainer extends React.Component<UsersContainerType> {
     onPageChanged = (pageNumber: number) => {
         let pageSize = this.props.pageSize
         this.props.changeUsersPageTC(pageNumber, pageSize)
-        // this.props.toggleIsFetching(true)
-        // this.props.setCurrentPage(pageNumber)
-        // usersAPI.getUsers(pageNumber, this.props.pageSize).then(res => {
-        //     this.props.setUsers(res.items);
-        //     this.props.toggleIsFetching(false);
-        // });
     }
 
     render() {
@@ -82,13 +78,27 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     }
 }
 
+export default compose<React.ComponentType>(
+    WithAuthRedirect,
+    connect(mapStateToProps, {
+        followUserTC,
+        unfollowUserTC,
+        setCurrentPage,
+        toggleIsFollowingProgress,
+        getUsersTC,
+        changeUsersPageTC,
+    })
+)(UsersContainer)
 
-export default connect(mapStateToProps, {
+/*
+
+export default WithAuthRedirect(connect(mapStateToProps, {
     followUserTC,
     unfollowUserTC,
     setCurrentPage,
     toggleIsFollowingProgress,
     getUsersTC,
     changeUsersPageTC,
-})(UsersContainer)
+})(UsersContainer))
 
+*/

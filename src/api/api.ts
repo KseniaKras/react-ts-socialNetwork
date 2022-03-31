@@ -40,7 +40,7 @@ type GetProfileResponseType = {
 // }
 
 let instance = axios.create({
-    // withCredentials: true,
+    //withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     headers: {
          'API-KEY': 'f72a4300-5ed0-4f0c-be33-a4b81b2c145d'

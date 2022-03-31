@@ -9,7 +9,7 @@ type ProfilePropsType = {
 }
 
 function Profile(props: ProfilePropsType) {
-
+debugger
     return (
         <div>
             <ProfileInfo profile={props.profile} />
