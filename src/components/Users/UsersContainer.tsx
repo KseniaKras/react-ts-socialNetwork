@@ -89,16 +89,3 @@ export default compose<React.ComponentType>(
         changeUsersPageTC,
     })
 )(UsersContainer)
-
-/*
-
-export default WithAuthRedirect(connect(mapStateToProps, {
-    followUserTC,
-    unfollowUserTC,
-    setCurrentPage,
-    toggleIsFollowingProgress,
-    getUsersTC,
-    changeUsersPageTC,
-})(UsersContainer))
-
-*/

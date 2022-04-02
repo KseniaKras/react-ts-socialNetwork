@@ -6,13 +6,15 @@ import {ProfileAPIType} from "../../redux/profile-reducer";
 
 type ProfilePropsType = {
     profile: ProfileAPIType | null
+    status: string
+    updateStatus: (status: string) => void
 }
 
 function Profile(props: ProfilePropsType) {
-debugger
+
     return (
         <div>
-            <ProfileInfo profile={props.profile} />
+            <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus} />
             <MyPostsContainer />
         </div>
     );

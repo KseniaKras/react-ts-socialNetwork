@@ -3,14 +3,17 @@ import c from './ProfileInfo.module.css';
 import {ProfileAPIType} from "../../../redux/profile-reducer";
 import Preloader from "../../common/Preloader/preloader";
 import userPhoto from "../../assets/images/userCommon.png";
+import ProfileStatus from './ProfileStatus';
 
 
 type ProfileInfoPropsType = {
     profile: ProfileAPIType | null
+    status: string
+    updateStatus: (status: string) => void
 }
 
 function ProfileInfo(props: ProfileInfoPropsType) {
-    if(!props.profile == null) {
+    if(!props.profile === null) {
         return <Preloader/>
     }
 
@@ -23,9 +26,8 @@ function ProfileInfo(props: ProfileInfoPropsType) {
                 />
             </div>
             <div>
-                {/*<img src={props.profile?.photos.small} />*/}
                 <img src={props.profile?.photos.large ?  props.profile.photos.large : userPhoto} className={c.avatar}/>
-                ava+description
+                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
             </div>
         </div>
     );

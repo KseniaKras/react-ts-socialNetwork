@@ -1,5 +1,6 @@
 import axios from "axios";
 import {UserType} from "../redux/users-reducer";
+import {log} from "util";
 
 type GetUsersResponseType = {
     items: UserType[]
@@ -25,11 +26,20 @@ type AuthorizeUserResponseType = {
 }
 
 type GetProfileResponseType = {
-    data: {
-
-    }
+    data: {}
     messages: string[]
     resultCode: number
+}
+
+type GetUserStatueResponseType = {
+    userId: number
+}
+type UpdateStatusResponseType = {
+    data: {}
+    fieldsError: string[]
+    resultCode: number
+    messages: string[]
+
 }
 
 // type usersAPIType = {
@@ -40,56 +50,50 @@ type GetProfileResponseType = {
 // }
 
 let instance = axios.create({
-    //withCredentials: true,
+    withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     headers: {
-         'API-KEY': 'f72a4300-5ed0-4f0c-be33-a4b81b2c145d'
+        'API-KEY': 'f72a4300-5ed0-4f0c-be33-a4b81b2c145d'
     },
 })
 
 export const usersAPI = {
-    getUsers (currentPage: number, pageSize: number) {
+    getUsers(currentPage: number, pageSize: number) {
         return instance.get<GetUsersResponseType>(`users?page=${currentPage}&count=${pageSize}`)
             .then(res => res.data)
     },
-    followUser (userId: number) {
+    followUser(userId: number) {
         return instance.post<GetFollowUserResponseType>(`/follow/${userId}`)
             .then(res => res.data)
     },
-    unfollowUser (userId: number) {
+    unfollowUser(userId: number) {
         return instance.delete<GetFollowUserResponseType>(`/follow/${userId}`)
             .then(res => res.data)
     },
     getProfile(userId: string) {
+        console.warn('Obsolete method. Please use profileAPI object')
+        profileAPI.getProfile(userId)
+    },
+}
+
+export const authAPI = {
+    getMe() {
+        return instance.get<AuthorizeUserResponseType>('auth/me')
+            .then(res => res.data)
+    },
+}
+
+export const profileAPI = {
+    getProfile(userId: string) {
         return instance.get(`profile/${userId}`)
-            // .then(res => res.data)
+    },
+    getUserStatus(userId: number) {
+        return instance.get(`profile/status/${userId}`)
+
+    },
+    updateStatus(status: string) {
+        return instance.put<UpdateStatusResponseType>('profile/status', {status})
     }
 }
 
 
-export const authAPI = {
-    getMe () {
-        return instance.get<AuthorizeUserResponseType>('auth/me')
-            .then(res => res.data)
-    },
-
-}
-
-
-
-/*
-const getUsers = (currentPage: number, pageSize: number) => {
-    return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-        .then(res => res.data)
-}
-
-const getFollowUser = (userId: number) => {
-    return instance.post(`/follow/${userId}`)
-        .then(res => res.data)
-}
-
-const getUnfollowUser = (userId: number) => {
-    return instance.delete(`/follow/${userId}`)
-        .then(res => res.data)
-}
-*/
