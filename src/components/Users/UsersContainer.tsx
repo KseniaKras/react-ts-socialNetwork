@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {
-    changeUsersPageTC,
+    FilterType,
     followUserTC, getUsersTC,
     setCurrentPage,
     toggleIsFollowingProgress,
@@ -15,17 +15,11 @@ import {compose} from "redux";
 
 
 
-type UsersContainerType = {
-    users: UserType[]
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
+type UsersContainerType = mapStateToPropsType & {
     followUserTC: (usersId: number) => void
     unfollowUserTC: (userId: number) => void
-    isFollowing: number[]
     toggleIsFollowingProgress: (isFetching: boolean, userId: number) => void
-    getUsersTC: (currentPage: number, pageSize: number)  => void
+    getUsersTC: (currentPage: number, pageSize: number, filter: FilterType)  => void
     changeUsersPageTC: (pageNumber: number, pageSize: number) => void
 }
 
@@ -36,18 +30,25 @@ type mapStateToPropsType = {
     currentPage: number
     isFetching: boolean
     isFollowing: number[]
+    filter: FilterType
 }
 
 
 class UsersContainer extends React.Component<UsersContainerType> {
 
     componentDidMount() {
-        this.props.getUsersTC(this.props.currentPage, this.props.pageSize)
+        const {currentPage, pageSize, filter} = this.props
+        this.props.getUsersTC(currentPage, pageSize, filter)
     }
 
     onPageChanged = (pageNumber: number) => {
-        let pageSize = this.props.pageSize
-        this.props.changeUsersPageTC(pageNumber, pageSize)
+        const {pageSize, filter} = this.props
+        this.props.getUsersTC(pageNumber, pageSize, filter)
+    }
+
+    onFilterChanged = (filter: FilterType) => {
+        const {pageSize} = this.props
+        this.props.getUsersTC(1, pageSize, filter)
     }
 
     render() {
@@ -59,6 +60,7 @@ class UsersContainer extends React.Component<UsersContainerType> {
                    pageSize={this.props.pageSize}
                    totalUsersCount={this.props.totalUsersCount}
                    onPageChanged={this.onPageChanged}
+                   onFilterChanged={this.onFilterChanged}
                    followUserTC={this.props.followUserTC}
                    unfollowUserTC={this.props.unfollowUserTC}
                    isFollowing={this.props.isFollowing}
@@ -75,6 +77,7 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
         isFollowing: state.usersPage.isFollowing,
+        filter: state.usersPage.filter
     }
 }
 
@@ -86,6 +89,5 @@ export default compose<React.ComponentType>(
         setCurrentPage,
         toggleIsFollowingProgress,
         getUsersTC,
-        changeUsersPageTC,
     })
 )(UsersContainer)

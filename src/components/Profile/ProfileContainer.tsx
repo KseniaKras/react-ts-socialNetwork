@@ -13,18 +13,14 @@ type mapStateToPropsType = {
     profile: null | ProfileAPIType
     status: string
 }
-
 export type mapDispatchToPropsType = {
     getUserProfileTC: (userId: string) => void
     getStatusTC: (userId: string) => void
     updateStatusTC: (status: string) => void
 };
-
 type ProfileContainerPropsType = mapStateToPropsType & mapDispatchToPropsType
 
-
 const ProfileContainer = (props: ProfileContainerPropsType) => {
-
     let {userId} = useParams()
     useEffect( ()=>{
         if (!userId) {
@@ -38,7 +34,6 @@ const ProfileContainer = (props: ProfileContainerPropsType) => {
         <Profile {...props} status={props.status} updateStatus={props.updateStatusTC}/>
     );
 }
-
 
 let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {

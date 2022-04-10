@@ -12,16 +12,12 @@ type mapStateToPropsType = {
 type mapDispatchToPropsType = {
     authoriseUserTC: () => void
 }
-
 type HeaderContainerPropsType = mapStateToPropsType & mapDispatchToPropsType
 
-
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
-
     componentDidMount() {
         this.props.authoriseUserTC()
     }
-
     render () {
         return (
             <Header {...this.props}/>
@@ -30,13 +26,11 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
 
 }
 
-
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
         isAuth: state.auth.isAuth,
         login: state.auth.login,
     }
 }
-
 
 export default connect(mapStateToProps, {authoriseUserTC})(HeaderContainer);

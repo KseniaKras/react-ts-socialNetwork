@@ -1,16 +1,26 @@
 .app-wrapper {
+    background-color: #1c3faa;
     margin: 0px auto;
-    width: 1200px;
+    width: 100%;
+    min-height: 100vh;
     display: grid;
     grid-template-columns: 2fr 10fr;
     grid-template-rows: 70px auto;
-    grid-gap: 20px;
+    /*grid-gap: 20px;*/
     grid-template-areas:
-    "header header"
+    "nav header"
     "nav content";
 }
 
 .app-wrapper-content {
-    background-color: coral;
+    /*margin: 0 auto;*/
+    background-color: #f1f5f8;
     grid-area: content;
+    border-radius: 30px;
+    display: flex;
+    /*flex-direction: column;*/
+    justify-content: center;
+    align-items: center;
+    /*margin-right: 10px;*/
+
 }

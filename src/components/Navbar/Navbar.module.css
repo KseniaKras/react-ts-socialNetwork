@@ -1,5 +1,41 @@
 .nav {
-    background-color: darkcyan;
+    background-color: #1c3faa;
+
     grid-area: nav;
     padding: 10px;
+}
+.headerLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+.logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+}
+.item {
+    color: #fff;
+    text-decoration: none;
+    padding: 0 10px 0 20px;
+    line-height: 50px;
+    letter-spacing: 0.5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.active {
+    display: inline-block;
+    width: 170px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    background-color: #ffffff26;
+    text-align: center;
+    border-radius: 6px;
+    /*padding: 10px 50px;*/
+
 }

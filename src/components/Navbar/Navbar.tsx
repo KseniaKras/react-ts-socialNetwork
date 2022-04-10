@@ -1,8 +1,8 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-import './Navbar.module.css'
-import c from './Navbar.module.css';
+import s from './Navbar.module.css';
 import {NavLinkDataType} from "../../redux/navbar-reducer";
+import MainLogo from './../assets/images/921305.png'
 
 
 type NavbarPropsType = {
@@ -13,9 +13,9 @@ function Navbar({myState}: NavbarPropsType) {
 
     let NavLinkElements = myState.map(n => {
         return (
-            <div key={n.id} className={c.item}>
+            <div key={n.id} className={s.item}>
                 <NavLink to={n.path}
-                         className={navData => navData.isActive ? c.active : c.item}>
+                         className={navData => navData.isActive ? s.active : s.item}>
                     {n.title}
                 </NavLink>
             </div>
@@ -23,15 +23,17 @@ function Navbar({myState}: NavbarPropsType) {
     })
 
     return (
-        <nav className={c.nav}>
+        <nav className={s.nav}>
+            <div className={s.headerLogo}>
+                <img src={MainLogo} alt="Logo" className={s.logo}/>
+                <span>SocialNetwork</span>
+            </div>
             {NavLinkElements}
         </nav>
     );
 }
 
 export default Navbar;
-
-
 
 
 /*return (

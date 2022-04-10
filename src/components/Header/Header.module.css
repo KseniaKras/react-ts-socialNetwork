@@ -1,15 +1,14 @@
 .header {
-    background-color: aqua;
+    background-color: #1c3faa;
     grid-area: header;
-}
-
-.logo {
-    padding: 10px;
-    width: 70px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .loginBlock {
-    float: right;
+    margin-right: 50px;
+    /*float: right;*/
     color: black;
     font-weight: bold;
 }

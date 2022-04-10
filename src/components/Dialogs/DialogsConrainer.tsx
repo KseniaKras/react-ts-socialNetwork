@@ -9,7 +9,7 @@ import {compose} from "redux";
 
 type mapDispatchToPropsType = {
     updateNewMessageText: (newMessage: string) => void
-    addMessage: () => void
+    addMessage: (newMessageText: string) => void
 }
 
 type mapStateToPropsType = {
@@ -29,8 +29,8 @@ let mapDispatchToProps = (dispatch: (action: DialogsActionsTypes) => void): mapD
         updateNewMessageText: (newMessage: string) => {
             dispatch(updateNewMessageTextAC(newMessage))
         },
-        addMessage: () => {
-            dispatch(addMessageAC())
+        addMessage: (newMessageText: string) => {
+            dispatch(addMessageAC(newMessageText))
         }
     }
 }
@@ -38,5 +38,5 @@ let mapDispatchToProps = (dispatch: (action: DialogsActionsTypes) => void): mapD
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, mapDispatchToProps),
-    WithAuthRedirect
+   // WithAuthRedirect
 )(Dialogs);

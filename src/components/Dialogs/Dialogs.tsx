@@ -1,17 +1,16 @@
-import React, {ChangeEvent, KeyboardEvent} from 'react';
+import React, {ChangeEvent} from 'react';
 import './Dialogs.module.css'
 import c from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {DialogsPageType} from "../../redux/dialogs-reducer";
-import {Navigate} from 'react-router-dom';
+import {AddMessageForm} from "./MessageForm";
 
 
 type DialogsPropsType = {
     dialogsPage: DialogsPageType
     updateNewMessageText: (newMessage: string) => void
-    addMessage: () => void
-   // isAuth: boolean
+    addMessage: (newMessageText: string) => void
 }
 
 function Dialogs({dialogsPage, updateNewMessageText, addMessage}: DialogsPropsType) {
@@ -24,13 +23,13 @@ function Dialogs({dialogsPage, updateNewMessageText, addMessage}: DialogsPropsTy
         updateNewMessageText(newMessage)
     }
 
-    const onAddMessageHandler = () => addMessage()
+    // const onAddMessageHandler = () => addMessage()
 
-    const onKeyPressAddMessage = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === 'Enter') {
-            onAddMessageHandler()
-        }
-    }
+    // const onKeyPressAddMessage = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    //     if (e.key === 'Enter') {
+    //         onAddMessageHandler()
+    //     }
+    // }
 
     return (
         <div className={c.dialogs}>
@@ -40,8 +39,9 @@ function Dialogs({dialogsPage, updateNewMessageText, addMessage}: DialogsPropsTy
             <div className={c.messages}>
                 {MessagesElements}
 
-                <textarea value={dialogsPage.newMessageText} onChange={onChangeMessageHandler} onKeyPress={onKeyPressAddMessage}/>
-                <button onClick={onAddMessageHandler}>add</button>
+                <AddMessageForm addMessage={addMessage} />
+                {/*<textarea value={dialogsPage.newMessageText} onChange={onChangeMessageHandler} onKeyPress={onKeyPressAddMessage}/>*/}
+                {/*<button onClick={onAddMessageHandler}>add</button>*/}
             </div>
 
         </div>

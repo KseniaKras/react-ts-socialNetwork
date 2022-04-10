@@ -1,14 +1,16 @@
 import React from 'react';
 import s from "./users.module.css";
 import userPhoto from "../assets/images/userCommon.png";
-import {UserType} from "../../redux/users-reducer";
+import {FilterType, UserType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
+import {UsersSearchForm} from "./UsersSearchForm";
 
 
 type UsersPropsType = {
     totalUsersCount: number
     pageSize: number
     onPageChanged: (pageNumber: number) => void
+    onFilterChanged: (filter: FilterType) => void
     currentPage: number
     users: UserType[]
     followUserTC: (usersId: number) => void
@@ -26,6 +28,8 @@ const Users = (props: UsersPropsType) => {
 
     return (
         <div>
+            <UsersSearchForm onFilterChanged={props.onFilterChanged}/>
+
             <div className={s.pages}>
                 {pages.map(p => {
                     return <span key={p} className={props.currentPage === p ? s.selectedPage : s.pageItem}
@@ -84,3 +88,7 @@ const Users = (props: UsersPropsType) => {
 };
 
 export default Users;
+
+
+
+

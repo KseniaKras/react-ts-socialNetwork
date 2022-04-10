@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import './MyPosts.module.css'
 import Post from "./Post/Post";
-import c from './MyPosts.module.css';
+import s from './MyPosts.module.css';
 import {ProfilePageType} from "../../../redux/profile-reducer";
 
 
@@ -24,17 +24,17 @@ function MyPosts({profilePage,addPost,updateNewPostText,...props}: MyPostsPropsT
     }
 
     return (
-        <div>
+        <div className={s.postsBlock}>
             <h3>My Posts</h3>
             <div>
                 <div>
-                    <textarea value={ profilePage.newPostText } onChange={ onPostChangeHandler }/>
+                    <textarea value={ profilePage.newPostText } onChange={ onPostChangeHandler } className={s.textarea}/>
                 </div>
                 <div>
                     <button onClick={ onAddPostHandler }>Add Post</button>
                 </div>
             </div>
-            <div className={c.post}>
+            <div className={s.post}>
                 {postsElements}
             </div>
         </div>

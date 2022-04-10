@@ -1,6 +1,5 @@
 import axios from "axios";
 import {UserType} from "../redux/users-reducer";
-import {log} from "util";
 
 type GetUsersResponseType = {
     items: UserType[]
@@ -39,7 +38,11 @@ type UpdateStatusResponseType = {
     fieldsError: string[]
     resultCode: number
     messages: string[]
-
+}
+type LoginUserResponseType = {
+    resultCode: number
+    messages: string[]
+    data: {}
 }
 
 // type usersAPIType = {
@@ -58,8 +61,8 @@ let instance = axios.create({
 })
 
 export const usersAPI = {
-    getUsers(currentPage: number, pageSize: number) {
-        return instance.get<GetUsersResponseType>(`users?page=${currentPage}&count=${pageSize}`)
+    getUsers(currentPage: number = 1, pageSize: number = 10, term: string = '', friend: null | boolean = null) {
+        return instance.get<GetUsersResponseType>(`users?page=${currentPage}&count=${pageSize}&term=${term}` + (friend === null ? '' : `&friend=${friend}`))
             .then(res => res.data)
     },
     followUser(userId: number) {
@@ -81,6 +84,11 @@ export const authAPI = {
         return instance.get<AuthorizeUserResponseType>('auth/me')
             .then(res => res.data)
     },
+    loginUser(email: string, password: string, rememberMe: boolean) {
+        return instance.post<LoginUserResponseType>('auth/login', {
+            email, password, rememberMe
+        })
+    }
 }
 
 export const profileAPI = {

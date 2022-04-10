@@ -37,9 +37,6 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType> {
         }
     }
 
-    // if(!props. === null) {
-    //     return <Preloader/>
-    // }
     render() {
         return (
             <div>

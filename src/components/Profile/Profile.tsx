@@ -3,6 +3,7 @@ import './Profile.module.css'
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import {ProfileAPIType} from "../../redux/profile-reducer";
+import s from './Profile.module.css'
 
 type ProfilePropsType = {
     profile: ProfileAPIType | null
@@ -13,7 +14,7 @@ type ProfilePropsType = {
 function Profile(props: ProfilePropsType) {
 
     return (
-        <div>
+        <div className={s.profileBlock}>
             <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus} />
             <MyPostsContainer />
         </div>
