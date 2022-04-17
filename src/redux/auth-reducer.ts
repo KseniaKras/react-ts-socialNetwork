@@ -42,11 +42,14 @@ export const authoriseUserTC = () => (dispatch: Dispatch) => {
         })
 }
 
-export const loginUserTC = (email: string, password: string, rememberMe: boolean):ThunkType => (dispatch) => {
+export const loginUserTC = (email: string, password: string, rememberMe: boolean, setStatus: (status?: any) => void):ThunkType => (dispatch) => {
     authAPI.loginUser(email, password, rememberMe)
         .then(res => {
+            debugger
             if (res.data.resultCode === 0) {
                 dispatch(authoriseUserTC())
+            } else {
+                setStatus(res.data.messages[0])
             }
         })
 }

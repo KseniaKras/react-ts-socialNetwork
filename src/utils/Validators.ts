@@ -27,3 +27,19 @@ export const validateMessage = (value: string) => {
     }
     return error;
 }
+
+export const validateEmail = (value: string) => {
+    let error;
+    if (!value) {
+        error = requiredField()
+    }
+    return error;
+}
+
+export const validatePassword = (value: string) => {
+    let error;
+    if (!value) {
+        error = requiredField()
+    }
+    return error;
+}
