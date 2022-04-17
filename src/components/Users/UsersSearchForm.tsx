@@ -7,10 +7,6 @@ const usersSearchFormValidate = (values: any) => {
     return errors;
 }
 
-// type FormType = {
-//     term: string
-//     friend: "true" | "false" | "null"
-// }
 
 type UsersSearchFormPropsType = {
     onFilterChanged: (filter: FilterType) => void

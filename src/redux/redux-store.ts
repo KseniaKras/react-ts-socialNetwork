@@ -5,7 +5,7 @@ import navbarReducer from "./navbar-reducer";
 import headerReducer from "./header-reducer";
 import {UsersActionsType, usersReducer} from "./users-reducer";
 import {AuthActionsType, authReducer} from "./auth-reducer";
-import thunk from "redux-thunk";
+import thunk, {ThunkAction} from "redux-thunk";
 
 
 type RootReducerType = typeof rootReducer;
@@ -25,5 +25,8 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 
 
 export type AppActionsType = UsersActionsType | DialogsActionsTypes | ProfileActionsTypes | AuthActionsType
+export type ThunkType = ThunkAction<void, AppStateType, unknown, AppActionsType>
+
+
 
 export default store;

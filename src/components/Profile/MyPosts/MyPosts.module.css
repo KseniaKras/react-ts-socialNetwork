@@ -5,3 +5,12 @@
 .textarea {
     width: 700px;
 }
+
+.textareaWithError {
+    width: 700px;
+    border: 2px solid red;
+}
+
+.errorText {
+    color: red;
+}

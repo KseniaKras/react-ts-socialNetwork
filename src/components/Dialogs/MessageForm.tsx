@@ -1,5 +1,7 @@
 import React, {FC} from 'react';
-import {Field, Formik} from "formik";
+import {Field, Form, Formik} from "formik";
+import {validateMessage} from "../../utils/Validators";
+import s from "../Profile/MyPosts/MyPosts.module.css";
 
 type MessageFormPropsType = {
     addMessage: (newMessageText: string) => void
@@ -8,6 +10,8 @@ export const AddMessageForm: FC<MessageFormPropsType> = ({addMessage}) => {
 
     const submit = (values: any, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
         addMessage(values.message)
+        console.log('message')
+        setSubmitting(false)
     }
 
     return <>
@@ -15,41 +19,27 @@ export const AddMessageForm: FC<MessageFormPropsType> = ({addMessage}) => {
             initialValues={{message: ''}}
             onSubmit={submit}
         >
-            <form>
-                <Field
-                    id="message"
-                    component="textarea"
-                    type="text"
-                    name="message"
-                    placeholder="Enter your message"
-                />
-                <button type="submit">
-                    Send
-                </button>
-            </form>
+            {({isSubmitting, errors, touched}) => (
+                <Form>
+                    <Field
+                        id="message"
+                        component="textarea"
+                        type="text"
+                        name="message"
+                        placeholder="Enter your message"
+                        validate={validateMessage}
+                        className={errors.message ? s.textareaWithError : s.textarea}
+                    />
+                    {errors.message
+                        && touched.message
+                        && <div className={errors.message && s.errorText}>{errors.message}</div>}
+                    <div>
+                        <button type="submit" disabled={isSubmitting}>
+                            Send
+                        </button>
+                    </div>
+                </Form>
+            )}
         </Formik>
     </>
 };
-
-
-// const formik = useFormik({
-//     initialValues: {
-//         messageText: ''
-//     },
-//     onSubmit: (values) => {
-//         addMessage(values.messageText)
-//     }
-// })
-//
-// return (
-//     <form>
-//         <input
-//             type="text"
-//             name="messageText"
-//             onChange={formik.handleChange}
-//             onBlur={formik.handleBlur}
-//             value={formik.values.messageText}
-//         />
-//         <button type="submit">Send</button>
-//     </form>
-// );

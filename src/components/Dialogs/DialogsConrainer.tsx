@@ -1,14 +1,13 @@
 import React from 'react';
-import {addMessageAC, DialogsActionsTypes, DialogsPageType, updateNewMessageTextAC} from "../../redux/dialogs-reducer";
+import {addMessageAC, DialogsActionsTypes, DialogsPageType} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {WithAuthRedirect} from "../hoc/WithAuthRedirect";
 import {compose} from "redux";
+import {WithAuthRedirect} from "../hoc/WithAuthRedirect";
 
 
 type mapDispatchToPropsType = {
-    updateNewMessageText: (newMessage: string) => void
     addMessage: (newMessageText: string) => void
 }
 
@@ -26,9 +25,6 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
 
 let mapDispatchToProps = (dispatch: (action: DialogsActionsTypes) => void): mapDispatchToPropsType => {
     return {
-        updateNewMessageText: (newMessage: string) => {
-            dispatch(updateNewMessageTextAC(newMessage))
-        },
         addMessage: (newMessageText: string) => {
             dispatch(addMessageAC(newMessageText))
         }
@@ -38,5 +34,5 @@ let mapDispatchToProps = (dispatch: (action: DialogsActionsTypes) => void): mapD
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, mapDispatchToProps),
-   // WithAuthRedirect
+   WithAuthRedirect
 )(Dialogs);

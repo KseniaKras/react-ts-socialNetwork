@@ -88,6 +88,9 @@ export const authAPI = {
         return instance.post<LoginUserResponseType>('auth/login', {
             email, password, rememberMe
         })
+    },
+    logout() {
+        return instance.delete('auth/login')
     }
 }
 
@@ -101,7 +104,8 @@ export const profileAPI = {
     },
     updateStatus(status: string) {
         return instance.put<UpdateStatusResponseType>('profile/status', {status})
-    }
+    },
+
 }
 
 

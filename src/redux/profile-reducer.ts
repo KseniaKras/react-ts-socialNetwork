@@ -3,7 +3,6 @@ import {Dispatch} from "redux";
 import {profileAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_PROFILE = 'SET-PROFILE'
 const SET_STATUS = 'SET-STATUS'
 
@@ -35,36 +34,31 @@ export type ProfileAPIType = {
     }
 }
 export type ProfilePageType = {
-    newPostText: string
+    // newPostText: string
     posts: Array<PostType>
     profile: ProfileAPIType | null
     status: string
 }
 
 let initialState = {
-    newPostText: 'My first post',
     posts: [
         {
             id: v1(),
-            // avatar: 'https://kartinkin.net/uploads/posts/2021-07/1626319767_12-kartinkin-com-p-anime-ava-geimer-anime-krasivo-12.png',
             message: 'Hi! It\'s my first post',
             likesCount: 10,
         },
         {
             id: v1(),
-            // avatar: 'https://www.vokrug.tv/pic/person/2/b/f/4/2bf448098b7badf3b37e87c510da29bc.jpeg',
             message: 'Hello',
             likesCount: 20,
         },
         {
             id: v1(),
-            // avatar: 'https://www.kinonews.ru/insimgs/2016/newsimg/newsimg59861.jpg',
             message: 'What\'s new?',
             likesCount: 25,
         },
         {
             id: v1(),
-            // avatar: 'https://whatsism.com/uploads/posts/2018-07/1530546770_rmk_vdjbx10.jpg',
             message: 'Good day!',
             likesCount: 35,
         },
@@ -78,16 +72,10 @@ const profileReducer = (state: ProfilePageType = initialState, action: ProfileAc
 
     switch (action.type) {
         case ADD_POST:
-            let newPost: PostType = {id: v1(), message: state.newPostText, likesCount: 0}
+            let newPost: PostType = {id: v1(), message: action.postText, likesCount: 0}
             return {
                 ...state,
-                newPostText: '',
                 posts: [newPost, ...state.posts]
-            }
-        case UPDATE_NEW_POST_TEXT:
-            return {
-                ...state,
-                newPostText: action.newText
             }
         case SET_PROFILE:
             return {
@@ -105,8 +93,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ProfileAc
 }
 
 //AC
-export const addPost = () => ({type: ADD_POST, postText: initialState.newPostText} as const)
-export const updateNewPostText = (newText: string) => ({type: UPDATE_NEW_POST_TEXT, newText: newText} as const)
+export const addPost = (postText: string) => ({type: ADD_POST, postText} as const)
 export const setProfile = (profile: ProfileAPIType) => ({type: SET_PROFILE, profile} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
 
@@ -142,8 +129,10 @@ export const updateStatusTC = (status: string) => {
 
 
 //types
-export type ProfileActionsTypes = ReturnType<typeof addPost> | ReturnType<typeof updateNewPostText>
-    | ReturnType<typeof setProfile> | ReturnType<typeof setStatus>
+export type ProfileActionsTypes =
+    | ReturnType<typeof addPost>
+    | ReturnType<typeof setProfile>
+    | ReturnType<typeof setStatus>
 
 
 export default profileReducer;
